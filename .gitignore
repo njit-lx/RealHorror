@@ -1,0 +1,44 @@
+# ==== Unreal Engine 相关忽略 ====
+
+# 编译生成的二进制文件夹
+Binaries/
+Build/
+
+# 引擎的中间文件缓存
+DerivedDataCache/
+Intermediate/
+
+# 保存运行时数据的文件夹，通常是调试和临时文件
+Saved/
+
+# 编译日志
+*.log
+
+# 临时打包文件夹
+*.vs/
+*.sdf
+*.opensdf
+
+# Visual Studio 相关文件
+*.vcxproj*
+*.user
+*.userprefs
+*.sln
+
+# Rider 相关设置
+.idea/
+*.sln.iml
+
+# Mac 系统隐藏文件
+.DS_Store
+
+# 其他
+.vscode/
+
+# Git LFS 可以用来管理大文件，如果你用就不用管下面这条
+# *.uasset
+# *.umap
+
+# 如果不想提交自动生成的蓝图临时文件夹
+Saved/Autosaves/
+
