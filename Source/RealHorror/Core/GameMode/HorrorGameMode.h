@@ -13,4 +13,6 @@ UCLASS()
 class REALHORROR_API AHorrorGameMode : public AGameModeBase
 {
 	GENERATED_BODY()
+public:
+	AHorrorGameMode();
 };
