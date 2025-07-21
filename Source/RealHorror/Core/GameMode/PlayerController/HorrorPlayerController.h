@@ -13,4 +13,6 @@ UCLASS()
 class REALHORROR_API AHorrorPlayerController : public APlayerController
 {
 	GENERATED_BODY()
+public:
+	AHorrorPlayerController();
 };

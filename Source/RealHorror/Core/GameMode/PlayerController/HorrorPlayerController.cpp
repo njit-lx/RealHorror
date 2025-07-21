@@ -2,3 +2,10 @@
 
 
 #include "HorrorPlayerController.h"
+
+#include "CameraManager/HorrorCameraManager.h"
+
+AHorrorPlayerController::AHorrorPlayerController()
+{
+	PlayerCameraManagerClass = AHorrorCameraManager::StaticClass();
+}

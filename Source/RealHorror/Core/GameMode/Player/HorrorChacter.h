@@ -6,6 +6,9 @@
 #include "GameFramework/Character.h"
 #include "HorrorChacter.generated.h"
 
+class UHorrorInterActionComponent;
+class UHorrorInventroyComponent;
+
 UCLASS()
 class REALHORROR_API AHorrorChacter : public ACharacter
 {
@@ -25,4 +28,10 @@ public:
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+public:
+	UPROPERTY(EditAnywhere,BlueprintReadWrite,Category="HorrorComponent")
+	UHorrorInterActionComponent* InterActionComponent;
+
+	UPROPERTY(EditAnywhere,BlueprintReadWrite,Category="HorrorComponent")
+	UHorrorInventroyComponent* InventroyComponent;
 };
