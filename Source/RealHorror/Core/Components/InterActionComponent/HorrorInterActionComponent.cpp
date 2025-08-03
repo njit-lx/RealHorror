@@ -3,6 +3,10 @@
 
 #include "HorrorInterActionComponent.h"
 
+#include "RealHorror/Core/Uitil/HorrorBlueprintFunctionLibrary.h"
+#include "RealHorror/Core/GameMode/PlayerController/HorrorPlayerController.h"
+#include "RealHorror/Core/Interface/HorrorInterActionInterface.h"
+
 
 // Sets default values for this component's properties
 UHorrorInterActionComponent::UHorrorInterActionComponent()
@@ -21,7 +25,11 @@ void UHorrorInterActionComponent::BeginPlay()
 	Super::BeginPlay();
 
 	// ...
-	
+	UWorld* World =  GetOwner()->GetWorld();
+	if (!World)return;
+	FTimerDelegate timerDelegate;
+	timerDelegate.BindUFunction(this,"UpdateInterActionItem");
+	World->GetTimerManager().SetTimer(TimerHandle,timerDelegate,InterActionSetting.TraceRate,true);
 }
 
 
@@ -32,5 +40,74 @@ void UHorrorInterActionComponent::TickComponent(float DeltaTime, ELevelTick Tick
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
 	// ...
+}
+
+void UHorrorInterActionComponent::UpdateInterActionItem_Implementation()
+{
+	UWorld* World =  GetOwner()->GetWorld();
+	if (World)
+	{
+		FVector WorldLocation;
+		FVector WorldDirection;
+		const AHorrorPlayerController * PC = UHorrorBlueprintFunctionLibrary::GetHorrorPlayerController(this);
+		if (PC)
+		{
+			int32 ViewportSizeX, ViewportSizeY;
+			PC->GetViewportSize(ViewportSizeX, ViewportSizeY);
+
+			// 屏幕中心点
+			float ScreenX = ViewportSizeX / 2.0f;
+			float ScreenY = ViewportSizeY / 2.0f;
+			
+			if (PC->DeprojectScreenPositionToWorld(ScreenX, ScreenY, WorldLocation, WorldDirection))
+			{
+				FVector TraceStart = WorldLocation;
+				FVector TraceEnd = TraceStart + (WorldDirection * InterActionSetting.InteractionDistance);
+
+				FHitResult HitResult;
+				FCollisionQueryParams Params;
+				Params.AddIgnoredActor(GetOwner());
+				GetWorld()->LineTraceSingleByChannel(
+					HitResult,
+					TraceStart,
+					TraceEnd,
+					InterActionSetting.Channel,
+					Params
+				);
+				if (HitResult.bBlockingHit)
+				{
+					AActor* HitActor = HitResult.GetActor();
+					if (HitActor)
+					{
+						if (Cast<IHorrorInterActionInterface>(HitActor))
+						{
+							if (InterActionActor && InterActionActor != HitActor)
+							{
+								IHorrorInterActionInterface::Execute_HideInterUI(InterActionActor);
+								InterActionActor = HitActor;
+								IHorrorInterActionInterface::Execute_ShowInterUI(InterActionActor);
+							}
+							else
+							{
+								if (!InterActionActor)
+								{
+									InterActionActor = HitActor;
+									IHorrorInterActionInterface::Execute_ShowInterUI(InterActionActor);
+								}
+							}
+						}
+						else
+						{
+							if (InterActionActor)
+							{
+								IHorrorInterActionInterface::Execute_HideInterUI(InterActionActor);
+								InterActionActor = nullptr;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
 }
 

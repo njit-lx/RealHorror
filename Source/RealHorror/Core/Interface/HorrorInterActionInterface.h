@@ -6,6 +6,7 @@
 #include "UObject/Interface.h"
 #include "HorrorInterActionInterface.generated.h"
 
+
 // This class does not need to be modified.
 UINTERFACE()
 class UHorrorInterActionInterface : public UInterface
@@ -22,4 +23,9 @@ class REALHORROR_API IHorrorInterActionInterface
 
 	// Add interface functions to this class. This is the class that will be inherited to implement this interface.
 public:
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void ShowInterUI();
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void HideInterUI();
 };

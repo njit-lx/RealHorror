@@ -15,10 +15,10 @@ class REALHORROR_API UHorrorBlueprintFunctionLibrary : public UBlueprintFunction
 {
 	GENERATED_BODY()
 public:
-	UFUNCTION(BlueprintCallable, Category="Horror",meta=(WorldContext="WorldContextObject"))
+	UFUNCTION(BlueprintCallable,BlueprintPure, Category="Horror",meta=(WorldContext="WorldContextObject"))
 	static AHorrorPlayerController* GetHorrorPlayerController(UObject* WorldContextObject);
 	
-	UFUNCTION(BlueprintCallable, Category="Horror",meta=(WorldContext="WorldContextObject"))
+	UFUNCTION(BlueprintCallable,BlueprintPure,Category="Horror",meta=(WorldContext="WorldContextObject"))
 	static AHorrorChacter* GetHorrorCharacter(UObject* WorldContextObject);
 
 	template<typename  T>

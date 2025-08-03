@@ -24,3 +24,13 @@ void AHorrorBaseActor::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 }
 
+void AHorrorBaseActor::ShowInterUI_Implementation()
+{
+	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, "Show InterUI");
+}
+
+void AHorrorBaseActor::HideInterUI_Implementation()
+{
+	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, "Hide InterUI");
+}
+

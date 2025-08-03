@@ -13,4 +13,6 @@ UCLASS()
 class REALHORROR_API AHorrorCameraManager : public APlayerCameraManager
 {
 	GENERATED_BODY()
+public:
+	virtual void UpdateCamera(float DeltaTime) override;
 };

@@ -4,10 +4,11 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "RealHorror/Core/Interface/HorrorInterActionInterface.h"
 #include "HorrorBaseActor.generated.h"
 
 UCLASS()
-class REALHORROR_API AHorrorBaseActor : public AActor
+class REALHORROR_API AHorrorBaseActor : public AActor,public IHorrorInterActionInterface
 {
 	GENERATED_BODY()
 
@@ -22,4 +23,8 @@ protected:
 public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+
+	virtual void ShowInterUI_Implementation() override;
+
+	virtual void HideInterUI_Implementation() override;
 };
